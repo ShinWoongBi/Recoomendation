@@ -44,6 +44,7 @@ public class Main_menu extends AppCompatActivity {
     LinearLayout linearLayout;
     LoginButton loginButton;
     CallbackManager callbackManager;
+    ActionBar actionBar;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -94,9 +95,10 @@ public class Main_menu extends AppCompatActivity {
         // 툴버튼 생성
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         // 1번 탭 이동
         viewPager.setCurrentItem(1);
@@ -204,6 +206,7 @@ public class Main_menu extends AppCompatActivity {
                     center_btn.setBackgroundColor(Color.parseColor("#ffffff"));
                     right_btn.setBackgroundColor(Color.parseColor("#CCCCCC"));
                     setTitle("Community");
+
                     break;
             }
         }
