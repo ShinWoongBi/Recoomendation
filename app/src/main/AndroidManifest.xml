@@ -21,17 +21,22 @@
 
   <application
       android:label="@string/app_name"
-      android:icon="@drawable/ic_launcher"
+      android:icon="@mipmap/ic_launcher"
       android:allowBackup="false"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme"
       >
 
+
+
+
+    <!-- webRTC activity-->
     <activity
-        android:name="ConnectActivity"
+        android:name=".webRTC.ConnectActivity"
         android:label="@string/app_name"
         android:windowSoftInputMode="adjustPan"
         >
       <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
 
@@ -53,19 +58,42 @@
     </activity>
 
     <activity
-        android:name="SettingsActivity"
+        android:name=".webRTC.SettingsActivity"
         android:label="@string/settings_name"
         >
     </activity>
 
     <activity
-        android:name="CallActivity"
+        android:name=".webRTC.CallActivity"
         android:label="@string/app_name"
         android:screenOrientation="fullUser"
         android:configChanges="orientation|screenSize"
-        android:theme="@style/CallActivityTheme"
         >
     </activity>
+
+
+
+    <!--  my activity-->
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+
+    <activity android:name=".MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".Set_first_profile"/>
+    <activity android:name=".Main_menu"/>
+
+    <activity
+        android:name=".Login"
+        android:configChanges=
+            "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        android:label="@string/app_name" />
+
+
   </application>
 
 </manifest>
