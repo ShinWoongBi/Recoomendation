@@ -1,5 +1,6 @@
 package org.appspot.apprtc;
 
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -106,6 +107,15 @@ public class Main_menu extends AppCompatActivity {
         // 프로필 가져오기
         Get_Profile();
 
+
+        // TcpService 시작
+        if(!isServiceRunning("org.appspot.apprtc.TcpService")){
+            Intent TcpService = new Intent(Main_menu.this, org.appspot.apprtc.TcpService.class);
+
+            startService(TcpService);
+        }
+
+
     }
 
     @Override
@@ -117,14 +127,18 @@ public class Main_menu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-//    CallbackManager callbackManager = new CallbackManager() {
-//        @Override
-//        public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-//            Log.d("requestCode",requestCode+"");
-//            Log.d("resultCode", resultCode+"");
-//            return false;
-//        }
-//    };
+    public Boolean isServiceRunning(String serviceName) {
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo runningServiceInfo : activityManager.getRunningServices(Integer.MAX_VALUE)) {
+
+            if (serviceName.equals(runningServiceInfo.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 
     void Get_Profile(){

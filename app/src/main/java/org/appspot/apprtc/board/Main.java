@@ -1,17 +1,18 @@
 package org.appspot.apprtc.board;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import org.appspot.apprtc.R;
-import org.appspot.apprtc.webRTC.ConnectActivity;
+
+import java.util.ArrayList;
 
 /**
  * Created by kippe_000 on 2017-10-07.
@@ -19,7 +20,9 @@ import org.appspot.apprtc.webRTC.ConnectActivity;
 
 public class Main extends Fragment {
     Context context;
-    Button btn;
+//    Button btn;
+    ListView listView;
+    ArrayList<Data> arrayList_item;
 
     @Nullable
     @Override
@@ -27,21 +30,53 @@ public class Main extends Fragment {
         View view = inflater.inflate(R.layout.board_main, container, false);
 
         context = view.getContext();
-        btn = (Button)view.findViewById(R.id.web_btn);
+        listView = (ListView)view.findViewById(R.id.listView);
+        arrayList_item = new ArrayList<>();
 
+
+//        btn = (Button)view.findViewById(R.id.web_btn);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(context.getApplicationContext(), ConnectActivity.class));
+//            }
+//        });
 
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context.getApplicationContext(), ConnectActivity.class));
+
+
+    class ListViewAdapter extends BaseAdapter{
+        Context context;
+
+        @Override
+        public int getCount() {
+            return arrayList_item.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return arrayList_item.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if(convertView == null){
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.board_item,parent,false);
             }
-        });
+
+
+
+            return convertView;
+        }
     }
+
 }
