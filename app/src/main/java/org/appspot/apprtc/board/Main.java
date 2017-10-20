@@ -20,32 +20,26 @@ import java.util.ArrayList;
 
 public class Main extends Fragment {
     Context context;
-//    Button btn;
     ListView listView;
     ArrayList<Data> arrayList_item;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.board_main, container, false);
+        View view = inflater.inflate(R.layout.board_main, container, false); 
 
         context = view.getContext();
         listView = (ListView)view.findViewById(R.id.listView);
         arrayList_item = new ArrayList<>();
 
-
-//        btn = (Button)view.findViewById(R.id.web_btn);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(context.getApplicationContext(), ConnectActivity.class));
-//            }
-//        });
-
         return view;
     }
 
+    void Get_post(){
 
+
+
+    }
 
 
     class ListViewAdapter extends BaseAdapter{

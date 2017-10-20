@@ -31,6 +31,7 @@ import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 
 import org.appspot.apprtc.board.Main;
+import org.appspot.apprtc.webRTC.ConnectActivity;
 
 import java.util.ArrayList;
 
@@ -59,11 +60,13 @@ public class Main_menu extends AppCompatActivity {
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         loginButton = (LoginButton)findViewById(R.id.login_button);
+        Button message_btn = (Button)findViewById(R.id.message_btn);
 
         // 탭 버튼 리스너 적용
         left_btn.setOnClickListener(btn_listener);
         center_btn.setOnClickListener(btn_listener);
         right_btn.setOnClickListener(btn_listener);
+        message_btn.setOnClickListener(btn_listener);
 
         // 페이스북 로그아웃 CallBack
         callbackManager = CallbackManager.Factory.create();
@@ -109,11 +112,11 @@ public class Main_menu extends AppCompatActivity {
 
 
         // TcpService 시작
-        if(!isServiceRunning("org.appspot.apprtc.TcpService")){
-            Intent TcpService = new Intent(Main_menu.this, org.appspot.apprtc.TcpService.class);
-
-            startService(TcpService);
-        }
+//        if(!isServiceRunning("org.appspot.apprtc.TcpService")){
+//            Intent TcpService = new Intent(Main_menu.this, org.appspot.apprtc.TcpService.class);
+//
+//            startService(TcpService);
+//        }
 
 
     }
@@ -186,6 +189,10 @@ public class Main_menu extends AppCompatActivity {
                     break;
                 case R.id.right_btn:
                     viewPager.setCurrentItem(2);
+
+                    break;
+                case R.id.message_btn:
+                    startActivity(new Intent(getApplicationContext(), ConnectActivity.class));
 
                     break;
             }

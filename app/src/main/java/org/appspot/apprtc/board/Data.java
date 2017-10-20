@@ -13,5 +13,9 @@ public class Data {
 
     boolean liked;
 
+    Data(){
+
+    }
+
 
 }
