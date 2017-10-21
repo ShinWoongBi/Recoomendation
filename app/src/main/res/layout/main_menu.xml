@@ -60,21 +60,21 @@
 
                 <Button
                     android:id="@+id/left_btn"
-                    android:text="left"
+                    android:text="Collection"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"/>
 
                 <Button
                     android:id="@+id/center_btn"
-                    android:text="center"
+                    android:text="Chatbot"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.4"/>
 
                 <Button
                     android:id="@+id/right_btn"
-                    android:text="right"
+                    android:text="Community"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"/>

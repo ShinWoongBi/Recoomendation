@@ -111,14 +111,6 @@ public class Main_menu extends AppCompatActivity {
         Get_Profile();
 
 
-        // TcpService 시작
-//        if(!isServiceRunning("org.appspot.apprtc.TcpService")){
-//            Intent TcpService = new Intent(Main_menu.this, org.appspot.apprtc.TcpService.class);
-//
-//            startService(TcpService);
-//        }
-
-
     }
 
     @Override
