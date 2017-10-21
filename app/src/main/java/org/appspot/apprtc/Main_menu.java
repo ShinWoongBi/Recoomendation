@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -60,7 +61,7 @@ public class Main_menu extends AppCompatActivity {
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         loginButton = (LoginButton)findViewById(R.id.login_button);
-        Button message_btn = (Button)findViewById(R.id.message_btn);
+        ImageButton message_btn = (ImageButton)findViewById(R.id.message_btn);
 
         // 탭 버튼 리스너 적용
         left_btn.setOnClickListener(btn_listener);
@@ -184,8 +185,10 @@ public class Main_menu extends AppCompatActivity {
 
                     break;
                 case R.id.message_btn:
-                    startActivity(new Intent(getApplicationContext(), ConnectActivity.class));
-
+//                    startActivity(new Intent(getApplicationContext(), ConnectActivity.class));
+                    Intent intent = new Intent(getApplicationContext(),org.appspot.apprtc.chat.main.class);
+                    intent.putExtra("flag",0);
+                    startActivity(intent);
                     break;
             }
         }

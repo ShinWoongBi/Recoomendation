@@ -94,7 +94,6 @@ public class Main extends Fragment {
             e.printStackTrace();
         }
 
-//        listViewAdapter.notifyDataSetChanged();
 
         Get_ProfileImage();
 
@@ -192,6 +191,7 @@ public class Main extends Fragment {
                     // 프로필 들어가기
                     Intent intent = new Intent(getContext(), UserProfile.class);
                     intent.putExtra("mail", data.mail);
+                    intent.putExtra("name", data.profile_name);
                     startActivity(intent);
                 }
             });
