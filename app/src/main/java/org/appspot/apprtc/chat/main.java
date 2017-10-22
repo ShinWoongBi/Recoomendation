@@ -7,6 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +48,7 @@ public class main extends AppCompatActivity {
     ListviewAdapter listviewAdapter;
     String name;
     Bitmap bitmap;
+    static public org.appspot.apprtc.chat.Handler handler = null;
 
 
     @Override
@@ -56,7 +60,10 @@ public class main extends AppCompatActivity {
         chatDataBase = new ChatDataBase(getApplicationContext(), "recommendation.db", null, 1);
         listView = (ListView)findViewById(R.id.listView);
         listviewAdapter = new ListviewAdapter(getApplicationContext());
+        handler = new org.appspot.apprtc.chat.Handler(main.this);
+        arrayList = new ArrayList<>();
 
+        listView.setAdapter(listviewAdapter);
 
         Intent intent = getIntent();
         flag = intent.getIntExtra("flag",0);
@@ -88,16 +95,32 @@ public class main extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        handler = null;
+    }
+
+    public void handleMessage(Message msg) {
+        Get_All();
+    }
+    
+
+    @Override
     protected void onResume() {
         super.onResume();
 
         // 메시지 목록 가져오기
+        Get_All();
+        handler = new org.appspot.apprtc.chat.Handler(main.this);
+
+
+
+    }
+
+    public void Get_All(){
         arrayList = chatDataBase.select_all();
-        listView.setAdapter(listviewAdapter);
         Get_ProfileImage();
-//        listviewAdapter.notifyDataSetChanged();
-
-
     }
 
     ListView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
@@ -123,7 +146,8 @@ public class main extends AppCompatActivity {
     }
 
     void Get_ProfileImage(){
-        final android.os.Handler handelr = new android.os.Handler();
+        final android.os.Handler handeler = new Handler(Looper.getMainLooper());
+
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -141,7 +165,7 @@ public class main extends AppCompatActivity {
                     arrayList.get(i).bitmap = BitmapFactory.decodeStream(inputstream);
                 }
 
-                handelr.post(new Runnable() {
+                handeler.post(new Runnable() {
                     @Override
                     public void run() {
                         listviewAdapter.notifyDataSetChanged();

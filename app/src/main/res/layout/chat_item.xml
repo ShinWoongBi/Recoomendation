@@ -1,13 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:id="@+id/chat_room_listitem_linear"
+    android:gravity="left"
+    android:layout_height="wrap_content"
+    android:background="#fff">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:id="@+id/data"
-        android:textSize="8pt"/>
+        android:id="@+id/linear">
 
-</LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:id="@+id/data"
+            android:paddingLeft="10dp"
+            android:textColor="#000"
+            android:text=""
+            android:background="@drawable/talk1"
+            android:textSize="8pt"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:text="오후 10:32"
+            android:textColor="#000"
+            android:textSize="6pt"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="5dp"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:layout_gravity="bottom"
+            android:id="@+id/time2"
+            android:gravity="bottom"
+            android:text="오후 10:32"
+            android:layout_alignBottom="@+id/data2"
+            android:layout_toLeftOf="@+id/data2"
+            android:layout_toStartOf="@+id/data2"
+            android:textSize="6pt"
+            android:layout_marginBottom="1dp"
+            android:layout_marginRight="5dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
+            android:paddingRight="10dp"
+            android:textSize="8pt"
+            android:id="@+id/data2"
+            android:paddingLeft="10dp"
+            android:textColor="#000"
+            android:background="@drawable/talk2"
+            android:text=""
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

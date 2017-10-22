@@ -76,7 +76,6 @@
     <!--  my activity-->
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
-
     <activity android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -94,7 +93,7 @@
         android:label="@string/app_name" />
     <activity android:name=".user.UserProfile"/>
     <activity android:name=".chat.main"/>
-    <activity android:name=".chat.ChatRoom"/>
+    <activity android:name=".chat.ChatRoom" android:windowSoftInputMode="adjustResize"/>
 
 
     <service android:name=".TcpService"/>

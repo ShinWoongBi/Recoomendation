@@ -7,6 +7,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.appspot.apprtc.chat.ChatDataBase;
+import org.appspot.apprtc.chat.main;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +67,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+
+        if(main.handler != null){
+            main.handler.handleMessage(null);
         }
 
 

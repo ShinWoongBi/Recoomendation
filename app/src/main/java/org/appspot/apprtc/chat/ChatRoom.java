@@ -15,8 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,7 +48,7 @@ public class ChatRoom extends AppCompatActivity {
     BufferedReader reader = null;
     PrintWriter writer = null;
     ListView listView = null;
-    ImageButton message_btn = null;
+    Button message_btn = null;
     EditText message_E = null;
     ArrayList<Data> listView_list = null;
     ListView_Adapter listView_adapter = null;
@@ -63,7 +65,7 @@ public class ChatRoom extends AppCompatActivity {
         ImageButton call_btn = (ImageButton)findViewById(R.id.call_btn);
         SharedPreferences sharedPreferences = getSharedPreferences("Profile", MODE_PRIVATE);
         listView = (ListView)findViewById(R.id.listView);
-        message_btn = (ImageButton)findViewById(R.id.message_btn);
+        message_btn = (Button)findViewById(R.id.message_btn);
         message_E = (EditText)findViewById(R.id.message_E);
         listView_list = new ArrayList<>();
         listView_adapter = new ListView_Adapter(getApplicationContext());
@@ -181,8 +183,9 @@ public class ChatRoom extends AppCompatActivity {
     });
 
 
+
     // 메시지 보내기
-    ImageButton.OnClickListener message_btn_listener = new View.OnClickListener() {
+    Button.OnClickListener message_btn_listener = new View.OnClickListener() {
 
 
         @Override
@@ -280,6 +283,7 @@ public class ChatRoom extends AppCompatActivity {
         }
 
         listView_adapter.notifyDataSetChanged();
+        listView.setSelection(listView_list.size()-1);
     }
 
 
@@ -350,9 +354,35 @@ public class ChatRoom extends AppCompatActivity {
 
             Data data = listView_list.get(position);
 
-            TextView textView = (TextView)convertView.findViewById(R.id.data);
-            textView.setText(data.message);
+            TextView data_T;
+            TextView time_T;
 
+
+            Log.d("friend_mail",data.friend_mail);
+            Log.d("message",data.message);
+            Log.d("time", data.time);
+            Log.d("my_message",data.my_message+"");
+
+            if(data.my_message == 1){
+                ((LinearLayout)convertView.findViewById(R.id.linear)).setVisibility(View.INVISIBLE);
+                ((LinearLayout)convertView.findViewById(R.id.linear2)).setVisibility(View.VISIBLE);
+
+                data_T = (TextView)convertView.findViewById(R.id.data2);
+                time_T = (TextView)convertView.findViewById(R.id.time2);
+                data_T.setText(data.message);
+                time_T.setText(data.time);
+
+
+            }else{
+                ((LinearLayout)convertView.findViewById(R.id.linear)).setVisibility(View.VISIBLE);
+                ((LinearLayout)convertView.findViewById(R.id.linear2)).setVisibility(View.INVISIBLE);
+
+                data_T = (TextView)convertView.findViewById(R.id.data);
+                time_T = (TextView)convertView.findViewById(R.id.time);
+                data_T.setText(data.message);
+                time_T.setText(data.time);
+
+            }
 
             return convertView;
         }
