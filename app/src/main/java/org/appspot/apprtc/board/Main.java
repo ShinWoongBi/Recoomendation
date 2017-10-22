@@ -2,18 +2,15 @@ package org.appspot.apprtc.board;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,8 +27,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 /**
  * Created by kippe_000 on 2017-10-07.
@@ -185,13 +180,14 @@ public class Main extends Fragment {
             answer_c.setText(data.answer_c+" Answer");
 
 
+            circleImageView.setTag(position);
             circleImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // 프로필 들어가기
                     Intent intent = new Intent(getContext(), UserProfile.class);
-                    intent.putExtra("mail", data.mail);
-                    intent.putExtra("name", data.profile_name);
+                    intent.putExtra("mail", arrayList_item.get((Integer) view.getTag()).mail);
+                    intent.putExtra("name", arrayList_item.get((Integer) view.getTag()).profile_name);
                     startActivity(intent);
                 }
             });

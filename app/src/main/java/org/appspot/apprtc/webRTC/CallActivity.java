@@ -31,11 +31,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
-import java.io.IOException;
-import java.lang.RuntimeException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import org.appspot.apprtc.R;
 import org.webrtc.Camera1Enumerator;
@@ -50,10 +45,14 @@ import org.webrtc.RendererCommon.ScalingType;
 import org.webrtc.ScreenCapturerAndroid;
 import org.webrtc.SessionDescription;
 import org.webrtc.StatsReport;
-import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoCapturer;
 import org.webrtc.VideoFileRenderer;
 import org.webrtc.VideoRenderer;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Activity for peer connection call setup, call waiting
@@ -147,8 +146,8 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
   private AppRTCClient.SignalingParameters signalingParameters;
   private AppRTCAudioManager audioManager = null;
   private EglBase rootEglBase;
-  private SurfaceViewRenderer pipRenderer;
-  private SurfaceViewRenderer fullscreenRenderer;
+//  private SurfaceViewRenderer pipRenderer;
+//  private SurfaceViewRenderer fullscreenRenderer;
   private VideoFileRenderer videoFileRenderer;
   private final List<VideoRenderer.Callbacks> remoteRenderers =
       new ArrayList<VideoRenderer.Callbacks>();
@@ -192,8 +191,8 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     signalingParameters = null;
 
     // Create UI controls.
-    pipRenderer = (SurfaceViewRenderer) findViewById(R.id.pip_video_view);
-    fullscreenRenderer = (SurfaceViewRenderer) findViewById(R.id.fullscreen_video_view);
+//    pipRenderer = (SurfaceViewRenderer) findViewById(R.id.pip_video_view);
+//    fullscreenRenderer = (SurfaceViewRenderer) findViewById(R.id.fullscreen_video_view);
     callFragment = new CallFragment();
     hudFragment = new HudFragment();
 
@@ -206,22 +205,22 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     };
 
     // Swap feeds on pip view click.
-    pipRenderer.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        setSwappedFeeds(!isSwappedFeeds);
-      }
-    });
+//    pipRenderer.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View view) {
+//        setSwappedFeeds(!isSwappedFeeds);
+//      }
+//    });
 
-    fullscreenRenderer.setOnClickListener(listener);
+//    fullscreenRenderer.setOnClickListener(listener);
     remoteRenderers.add(remoteProxyRenderer);
 
     final Intent intent = getIntent();
 
     // Create video renderers.
     rootEglBase = EglBase.create();
-    pipRenderer.init(rootEglBase.getEglBaseContext(), null);
-    pipRenderer.setScalingType(ScalingType.SCALE_ASPECT_FIT);
+//    pipRenderer.init(rootEglBase.getEglBaseContext(), null);
+//    pipRenderer.setScalingType(ScalingType.SCALE_ASPECT_FIT);
     String saveRemoteVideoToFile = intent.getStringExtra(EXTRA_SAVE_REMOTE_VIDEO_TO_FILE);
 
     // When saveRemoteVideoToFile is set we save the video from the remote to a file.
@@ -237,19 +236,19 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
             "Failed to open video file for output: " + saveRemoteVideoToFile, e);
       }
     }
-    fullscreenRenderer.init(rootEglBase.getEglBaseContext(), null);
-    fullscreenRenderer.setScalingType(ScalingType.SCALE_ASPECT_FILL);
+//    fullscreenRenderer.init(rootEglBase.getEglBaseContext(), null);
+//    fullscreenRenderer.setScalingType(ScalingType.SCALE_ASPECT_FILL);
 
-    pipRenderer.setZOrderMediaOverlay(true);
-    pipRenderer.setEnableHardwareScaler(true /* enabled */);
-    fullscreenRenderer.setEnableHardwareScaler(true /* enabled */);
+//    pipRenderer.setZOrderMediaOverlay(true);
+//    pipRenderer.setEnableHardwareScaler(true /* enabled */);
+//    fullscreenRenderer.setEnableHardwareScaler(true /* enabled */);
     // Start with local feed in fullscreen and swap it to the pip when the call is connected.
     setSwappedFeeds(true /* isSwappedFeeds */);
 
     // Check for mandatory permissions.
     for (String permission : MANDATORY_PERMISSIONS) {
       if (checkCallingOrSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-        logAndToast("Permission " + permission + " is not granted");
+//        logAndToast("Permission " + permission + " is not granted");
         setResult(RESULT_CANCELED);
         finish();
         return;
@@ -258,7 +257,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
 
     Uri roomUri = intent.getData();
     if (roomUri == null) {
-      logAndToast(getString(R.string.missing_url));
+//      logAndToast(getString(R.string.missing_url));
       Log.e(TAG, "Didn't get any URL in intent!");
       setResult(RESULT_CANCELED);
       finish();
@@ -269,7 +268,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     String roomId = intent.getStringExtra(EXTRA_ROOMID);
     Log.d(TAG, "Room ID: " + roomId);
     if (roomId == null || roomId.length() == 0) {
-      logAndToast(getString(R.string.missing_url));
+//      logAndToast(getString(R.string.missing_url));
       Log.e(TAG, "Incorrect room ID in intent!");
       setResult(RESULT_CANCELED);
       finish();
@@ -338,8 +337,8 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     hudFragment.setArguments(intent.getExtras());
     // Activate call and HUD fragments and start the call.
     FragmentTransaction ft = getFragmentManager().beginTransaction();
-    ft.add(R.id.call_fragment_container, callFragment);
-    ft.add(R.id.hud_fragment_container, hudFragment);
+//    ft.add(R.id.call_fragment_container, callFragment);
+//    ft.add(R.id.hud_fragment_container, hudFragment);
     ft.commit();
 
     // For command line execution run connection for <runTimeMs> and exit.
@@ -510,7 +509,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
 
   @Override
   public void onVideoScalingSwitch(ScalingType scalingType) {
-    fullscreenRenderer.setScalingType(scalingType);
+//    fullscreenRenderer.setScalingType(scalingType);
   }
 
   @Override
@@ -556,7 +555,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     callStartedTimeMs = System.currentTimeMillis();
 
     // Start room connection.
-    logAndToast(getString(R.string.connecting_to, roomConnectionParameters.roomUrl));
+//    logAndToast(getString(R.string.connecting_to, roomConnectionParameters.roomUrl));
     appRtcClient.connectToRoom(roomConnectionParameters);
 
     // Create and audio manager that will take care of audio routing,
@@ -611,18 +610,18 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
       peerConnectionClient.close();
       peerConnectionClient = null;
     }
-    if (pipRenderer != null) {
-      pipRenderer.release();
-      pipRenderer = null;
-    }
+//    if (pipRenderer != null) {
+//      pipRenderer.release();
+//      pipRenderer = null;
+//    }
     if (videoFileRenderer != null) {
       videoFileRenderer.release();
       videoFileRenderer = null;
     }
-    if (fullscreenRenderer != null) {
-      fullscreenRenderer.release();
-      fullscreenRenderer = null;
-    }
+//    if (fullscreenRenderer != null) {
+//      fullscreenRenderer.release();
+//      fullscreenRenderer = null;
+//    }
     if (audioManager != null) {
       audioManager.stop();
       audioManager = null;
@@ -658,14 +657,14 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
   }
 
   // Log |msg| and Toast about it.
-  private void logAndToast(String msg) {
-    Log.d(TAG, msg);
-    if (logToast != null) {
-      logToast.cancel();
-    }
-    logToast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-    logToast.show();
-  }
+//  private void logAndToast(String msg) {
+//    Log.d(TAG, msg);
+//    if (logToast != null) {
+//      logToast.cancel();
+//    }
+//    logToast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+//    logToast.show();
+//  }
 
   private void reportError(final String description) {
     runOnUiThread(new Runnable() {
@@ -713,10 +712,10 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
   private void setSwappedFeeds(boolean isSwappedFeeds) {
     Logging.d(TAG, "setSwappedFeeds: " + isSwappedFeeds);
     this.isSwappedFeeds = isSwappedFeeds;
-    localProxyRenderer.setTarget(isSwappedFeeds ? fullscreenRenderer : pipRenderer);
-    remoteProxyRenderer.setTarget(isSwappedFeeds ? pipRenderer : fullscreenRenderer);
-    fullscreenRenderer.setMirror(isSwappedFeeds);
-    pipRenderer.setMirror(!isSwappedFeeds);
+//    localProxyRenderer.setTarget(isSwappedFeeds ? fullscreenRenderer : pipRenderer);
+//    remoteProxyRenderer.setTarget(isSwappedFeeds ? pipRenderer : fullscreenRenderer);
+//    fullscreenRenderer.setMirror(isSwappedFeeds);
+//    pipRenderer.setMirror(!isSwappedFeeds);
   }
 
   // -----Implementation of AppRTCClient.AppRTCSignalingEvents ---------------
@@ -726,7 +725,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     final long delta = System.currentTimeMillis() - callStartedTimeMs;
 
     signalingParameters = params;
-    logAndToast("Creating peer connection, delay=" + delta + "ms");
+//    logAndToast("Creating peer connection, delay=" + delta + "ms");
     VideoCapturer videoCapturer = null;
     if (peerConnectionParameters.videoCallEnabled) {
       videoCapturer = createVideoCapturer();
@@ -735,14 +734,14 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
         remoteRenderers, videoCapturer, signalingParameters);
 
     if (signalingParameters.initiator) {
-      logAndToast("Creating OFFER...");
+//      logAndToast("Creating OFFER...");
       // Create offer. Offer SDP will be sent to answering client in
       // PeerConnectionEvents.onLocalDescription event.
       peerConnectionClient.createOffer();
     } else {
       if (params.offerSdp != null) {
         peerConnectionClient.setRemoteDescription(params.offerSdp);
-        logAndToast("Creating ANSWER...");
+//        logAndToast("Creating ANSWER...");
         // Create answer. Answer SDP will be sent to offering client in
         // PeerConnectionEvents.onLocalDescription event.
         peerConnectionClient.createAnswer();
@@ -776,10 +775,10 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
           Log.e(TAG, "Received remote SDP for non-initilized peer connection.");
           return;
         }
-        logAndToast("Received remote " + sdp.type + ", delay=" + delta + "ms");
+//        logAndToast("Received remote " + sdp.type + ", delay=" + delta + "ms");
         peerConnectionClient.setRemoteDescription(sdp);
         if (!signalingParameters.initiator) {
-          logAndToast("Creating ANSWER...");
+//          logAndToast("Creating ANSWER...");
           // Create answer. Answer SDP will be sent to offering client in
           // PeerConnectionEvents.onLocalDescription event.
           peerConnectionClient.createAnswer();
@@ -821,7 +820,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        logAndToast("Remote end hung up; dropping PeerConnection");
+//        logAndToast("Remote end hung up; dropping PeerConnection");
         disconnect();
       }
     });
@@ -843,7 +842,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
       @Override
       public void run() {
         if (appRtcClient != null) {
-          logAndToast("Sending " + sdp.type + ", delay=" + delta + "ms");
+//          logAndToast("Sending " + sdp.type + ", delay=" + delta + "ms");
           if (signalingParameters.initiator) {
             appRtcClient.sendOfferSdp(sdp);
           } else {
@@ -888,7 +887,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        logAndToast("ICE connected, delay=" + delta + "ms");
+//        logAndToast("ICE connected, delay=" + delta + "ms");
         iceConnected = true;
         callConnected();
       }
@@ -900,7 +899,7 @@ public class CallActivity extends Activity implements AppRTCClient.SignalingEven
     runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        logAndToast("ICE disconnected");
+//        logAndToast("ICE disconnected");
         iceConnected = false;
         disconnect();
       }

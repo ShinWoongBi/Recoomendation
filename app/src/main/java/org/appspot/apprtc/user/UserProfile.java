@@ -1,7 +1,7 @@
 package org.appspot.apprtc.user;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -33,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfile extends AppCompatActivity {
     Data data;
-    String mail;
+    String mail; // 상대방 메일 주소
     CircleImageView circleImageView;
 
     @Override
@@ -82,14 +83,31 @@ public class UserProfile extends AppCompatActivity {
         Get_Profile_Image();
 
 
+        // 자신 예외 처리
+        SharedPreferences sharedPreferences = getSharedPreferences("Profile", MODE_PRIVATE);
+        String my_mail = sharedPreferences.getString("mail","");
+        if(mail.equals(my_mail)){
+            message_btn.setVisibility(View.GONE);
+            ((TextView)findViewById(R.id.message_T)).setVisibility(View.GONE);
+        }else{
+            message_btn.setVisibility(View.VISIBLE);
+            ((TextView)findViewById(R.id.message_T)).setVisibility(View.VISIBLE);
+
+        }
+
+
     }
 
-    CircleImageView.OnClickListener onClickListener = new View.OnClickListener() {
+
+    ImageButton.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(), org.appspot.apprtc.chat.main.class);
-
+            intent.putExtra("flag", 2); // 상대방 프로필에서 이동한 경우
+            intent.putExtra("mail", mail);
             startActivity(intent);
+
+            Log.d("adsf", "asdf");
         }
     };
 

@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -227,11 +228,26 @@ public class Login extends AppCompatActivity{
         editor.apply();
 
 
-        // 나이 성별을 입력하지 않은 사람 찾기
         Connect_server connect_server = new Connect_server();
+
+        SharedPreferences fcm_token_shPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String fcm_token = fcm_token_shPreferences.getString("fcm_token", "");
+        Log.d("fcm_token", fcm_token);
+        connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/user/save_fcm.php");
+        connect_server.AddParams("mail", id);
+        connect_server.AddParams("token", fcm_token);
+        BufferedReader bufferedReader = connect_server.Connect(true);
+        try {
+            connect_server.Buffer_read(bufferedReader);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        // 나이 성별을 입력하지 않은 사람 찾기
         connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/login/check.php");
         connect_server.AddParams("mail", id);
-        BufferedReader bufferedReader = connect_server.Connect(true);
+        bufferedReader = connect_server.Connect(false);
         int result = 0;
         String age = null,gender = null;
         String buffer = bufferedReader.readLine();

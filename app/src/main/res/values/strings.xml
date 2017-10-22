@@ -63,7 +63,7 @@
     <string name="pref_videocall_key">videocall_preference</string>
     <string name="pref_videocall_title">Video call.</string>
     <string name="pref_videocall_dlg">Enable video in a call.</string>
-    <string name="pref_videocall_default">true</string>
+    <string name="pref_videocall_default">false</string>
 
     <string name="pref_screencapture_key">screencapture_preference</string>
     <string name="pref_screencapture_title">Use screencapture.</string>

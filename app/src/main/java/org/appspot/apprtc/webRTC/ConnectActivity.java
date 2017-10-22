@@ -33,12 +33,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.Random;
 
 import org.appspot.apprtc.R;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Handles the initial setup where the user selects which room to join.
@@ -169,6 +170,10 @@ public class ConnectActivity extends Activity {
       String room = sharedPref.getString(keyprefRoom, "");
       connectToRoom(room, true, loopback, useValuesFromIntent, runTimeMs);
     }
+
+
+    connectToRoom("304631536", false, false, false, 0);
+
   }
 
   @Override
@@ -574,7 +579,7 @@ public class ConnectActivity extends Activity {
           intent.putExtra(CallActivity.EXTRA_SAVE_REMOTE_VIDEO_TO_FILE_HEIGHT, videoOutHeight);
         }
       }
-
+      finish();
       startActivityForResult(intent, CONNECTION_REQUEST);
     }
   }
