@@ -90,6 +90,10 @@ public class ChatRoom extends AppCompatActivity {
         connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/user/GetUserProfile.php");
         connect_server.AddParams("mail", friend_mail);
         BufferedReader bufferedReader = connect_server.Connect(false);
+
+
+
+
         try {
             friend_name = (new JSONObject(bufferedReader.readLine())).getString("name");
         } catch (IOException e) {

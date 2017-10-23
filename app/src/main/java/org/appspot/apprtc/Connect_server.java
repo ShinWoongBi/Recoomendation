@@ -23,7 +23,7 @@ public class Connect_server {
         this.url = Url;
     } // URL 설정
 
-    public void AddParams(String key, String value) { // Parameter 설정
+    public Connect_server AddParams(String key, String value) { // Parameter 설정
         String result = key+"="+value;
         if(param_c == 0)
             param += result;
@@ -31,7 +31,10 @@ public class Connect_server {
             param += "&"+result;
 
         param_c++;
+
+        return this;
     }
+
 
     static class Async extends AsyncTask<String, BufferedReader, BufferedReader>{
         String url = "";
