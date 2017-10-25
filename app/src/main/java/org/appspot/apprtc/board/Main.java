@@ -2,15 +2,20 @@ package org.appspot.apprtc.board;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +33,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by kippe_000 on 2017-10-07.
  */
@@ -38,6 +45,10 @@ public class Main extends Fragment {
     ArrayList<Data> arrayList_item;
     int NowPage = 1;
     ListViewAdapter listViewAdapter;
+    CircleImageView circleImageView;
+    LinearLayout linearLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
 
     @Nullable
     @Override
@@ -52,10 +63,80 @@ public class Main extends Fragment {
 
         listView.setAdapter(listViewAdapter);
 
+        circleImageView = (CircleImageView)view.findViewById(R.id.profile_image);
+        circleImageView.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/recommendation/.my_picture.jpg"));
+        linearLayout = (LinearLayout)view.findViewById(R.id.linear);
 
 
+        listView.setOnScrollListener(onScrollListener);
+        linearLayout.setOnClickListener(linearOnClickListener);
+        circleImageView.setOnClickListener(cirOnClickListener);
+
+
+        listView.addHeaderView(getActivity().getLayoutInflater().inflate(R.layout.board_main_header,container, false));
+
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_layout);
+        mSwipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+        mSwipeRefreshLayout.setOnRefreshListener(refreshListener);
         return view;
     }
+    SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            // 게시물 새로고침
+            Get_post();
+
+            // 새로고침 완료
+            mSwipeRefreshLayout.setRefreshing(false);
+
+        }
+    };
+
+    ListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
+
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            int scrollY = getScrollY();
+            //sticky actionbar
+            linearLayout.setTranslationY(Math.max(-scrollY, -scrollY));
+
+        }
+
+
+
+    };
+
+    public int getScrollY() {
+        View c = listView.getChildAt(0);
+        if (c == null) {
+            return 0;
+        }
+
+        int firstVisiblePosition = listView.getFirstVisiblePosition();
+        int top = c.getTop();
+
+        int headerHeight = 0;
+        if (firstVisiblePosition >= 1) {
+            headerHeight = linearLayout.getHeight(); // 수정
+        }
+
+        int result = -top + firstVisiblePosition * c.getHeight() + headerHeight;
+
+
+        return result;
+    }
+
 
     @Override
     public void onResume() {
@@ -63,7 +144,34 @@ public class Main extends Fragment {
 
        // 게시물 가져오기
         Get_post();
+
+
     }
+
+    CircleImageView.OnClickListener cirOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("Profile", Context.MODE_PRIVATE);
+            String mail = sharedPreferences.getString("mail","");
+            String name = sharedPreferences.getString("name","");
+
+            // 자신 프로필 들어가기
+            Intent intent = new Intent(getContext(), UserProfile.class);
+            intent.putExtra("mail", mail);
+            intent.putExtra("name", name);
+            startActivity(intent);
+        }
+    };
+
+    LinearLayout.OnClickListener linearOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // 글쓰기 Activity
+            startActivity(new Intent(getActivity(), WriteActivity.class));
+
+        }
+    };
+
 
     void Get_post(){
 

@@ -94,7 +94,7 @@
     <activity android:name=".user.UserProfile"/>
     <activity android:name=".chat.main"/>
     <activity android:name=".chat.ChatRoom" android:windowSoftInputMode="adjustResize"/>
-
+    <activity android:name=".board.WriteActivity"/>
     <activity android:name=".collection.TestActivity"/>
 
     <service android:name=".TcpService"/>

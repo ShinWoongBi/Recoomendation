@@ -17,7 +17,7 @@ public class Main extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.board_main, container, false);
+        View view = inflater.inflate(R.layout.collection_main, container, false);
 
 
 
