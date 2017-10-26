@@ -32,7 +32,6 @@ import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 
 import org.appspot.apprtc.board.Main;
-import org.appspot.apprtc.webRTC.ConnectActivity;
 
 import java.util.ArrayList;
 
@@ -97,7 +96,7 @@ public class Main_menu extends AppCompatActivity {
         // DrawerLayout 그림자 적용
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        // 툴버튼 생성
+        // 툴 바/버튼 생성
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();

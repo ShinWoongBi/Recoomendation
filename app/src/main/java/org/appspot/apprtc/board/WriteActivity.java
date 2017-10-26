@@ -19,7 +19,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.appspot.apprtc.Connect_server;
 import org.appspot.apprtc.R;
+
+import java.io.BufferedReader;
 
 /**
  * Created by kippe_000 on 2017-10-25.
@@ -61,6 +64,7 @@ public class WriteActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // 사진 올리기 버튼
                 Toast.makeText(WriteActivity.this, "asdf", Toast.LENGTH_SHORT).show();
+                Post();
             }
         });
 
@@ -72,9 +76,20 @@ public class WriteActivity extends AppCompatActivity {
 
 
     void Post(){
-        String data = editText.getText().toString();
+        String content = editText.getText().toString();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Profile", MODE_PRIVATE);
+        String mail = sharedPreferences.getString("mail","");
+        String user_type = sharedPreferences.getString("user_type","");
+        String token = sharedPreferences.getString("token","");
+
+        Connect_server connect_server = new Connect_server();
+        connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/community/WritePost.php");
+        connect_server.AddParams("mail",mail).AddParams("token",token).AddParams("user_type", user_type).AddParams("content", content);
+        BufferedReader bufferedReader = connect_server.Connect(false);
 
 
+        finish();
 
     }
 

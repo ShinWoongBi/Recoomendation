@@ -85,6 +85,11 @@ public class Main extends Fragment {
                 android.R.color.holo_red_light
         );
         mSwipeRefreshLayout.setOnRefreshListener(refreshListener);
+
+
+
+        // 게시물 가져오기
+        Get_post();
         return view;
     }
     SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -147,9 +152,6 @@ public class Main extends Fragment {
     public void onResume() {
         super.onResume();
 
-       // 게시물 가져오기
-        Get_post();
-
 
     }
 
@@ -186,7 +188,7 @@ public class Main extends Fragment {
         connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/community/GetPost.php");
         connect_server.AddParams("NowPage", String.valueOf(NowPage)).AddParams("mail", mail).AddParams("token",sharedPreferences.getString("token",""))
                         .AddParams("user_type",sharedPreferences.getString("user_type",""));
-        BufferedReader bufferedReader = connect_server.Connect(true);
+        BufferedReader bufferedReader = connect_server.Connect(false);
         try {
             connect_server.Buffer_read(bufferedReader);
         } catch (Exception e) {
