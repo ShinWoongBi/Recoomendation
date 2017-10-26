@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class Main extends Fragment {
     Context context;
     ListView listView;
     ArrayList<Data> arrayList_item;
-    int NowPage = 1;
+    int NowPage = 0;
     ListViewAdapter listViewAdapter;
     CircleImageView circleImageView;
     LinearLayout linearLayout;
@@ -89,6 +90,10 @@ public class Main extends Fragment {
     SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            // list 데이터 비우
+            arrayList_item.clear();
+
+
             // 게시물 새로고침
             Get_post();
 
@@ -174,11 +179,19 @@ public class Main extends Fragment {
 
 
     void Get_post(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("Profile", Context.MODE_PRIVATE);
+        String mail = sharedPreferences.getString("mail","");
 
         Connect_server connect_server = new Connect_server();
         connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/community/GetPost.php");
-        connect_server.AddParams("NowPage", String.valueOf(NowPage));
-        BufferedReader bufferedReader = connect_server.Connect(false);
+        connect_server.AddParams("NowPage", String.valueOf(NowPage)).AddParams("mail", mail).AddParams("token",sharedPreferences.getString("token",""))
+                        .AddParams("user_type",sharedPreferences.getString("user_type",""));
+        BufferedReader bufferedReader = connect_server.Connect(true);
+        try {
+            connect_server.Buffer_read(bufferedReader);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String buffer = null;
         JSONObject jsonObject = null;
@@ -186,8 +199,9 @@ public class Main extends Fragment {
         try {
             while((buffer = bufferedReader.readLine()) != null){
                 jsonObject = new JSONObject(buffer);
-                data = new Data(jsonObject.getString("mail"), jsonObject.getString("name"), jsonObject.getInt("post_id"), jsonObject.getString("time"), jsonObject.getString("content"),
-                        jsonObject.getInt("answer_c"), jsonObject.getInt("liked"));
+                data = new Data(jsonObject.getString("mail"), jsonObject.getString("name"), jsonObject.getInt("post_id"),
+                        jsonObject.getString("time"), jsonObject.getString("content"),
+                        jsonObject.getInt("answer_c"), jsonObject.getInt("liked"), jsonObject.getInt("my_like"));
 
                 arrayList_item.add(data);
             }
@@ -280,13 +294,22 @@ public class Main extends Fragment {
             content.setText(data.content);
 
             // 종아요수 올리기
-            TextView like_c = (TextView)convertView.findViewById(R.id.like_c);
-            like_c.setText(data.like_c+"");
+            if(data.like_c != 0) {
+                TextView like_c = (TextView) convertView.findViewById(R.id.like_c);
+                like_c.setText(data.like_c + "");
+            }
 
             // 답변수 올리기
-            TextView answer_c = (TextView)convertView.findViewById(R.id.answer_c);
-            answer_c.setText(data.answer_c+" Answer");
+            if(data.answer_c != 0) {
+                TextView answer_c = (TextView) convertView.findViewById(R.id.answer_c);
+                answer_c.setText(data.answer_c + " Answer");
+            }
 
+
+            // 좋아요를 한지 안한지
+            if(!data.liked){
+                ((ImageView)convertView.findViewById(R.id.imageView)).setImageResource(R.drawable.heart2);
+            }
 
             circleImageView.setTag(position);
             circleImageView.setOnClickListener(new View.OnClickListener() {

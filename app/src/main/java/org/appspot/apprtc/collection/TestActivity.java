@@ -30,6 +30,8 @@ public class TestActivity extends Activity {
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
             }
         });
 

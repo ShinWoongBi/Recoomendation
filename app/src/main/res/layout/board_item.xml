@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#fff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,39 +92,39 @@
         android:weightSum="10">
 
         <RelativeLayout
+            android:id="@+id/infor_count"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
+            android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:id="@+id/infor_count"
-            android:gravity="center_vertical">
+            android:paddingRight="10dp">
 
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/heart2"
-                android:id="@+id/imageView" />
+                android:src="@drawable/heart2" />
 
             <TextView
+                android:id="@+id/like_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:text="12"
                 android:layout_alignTop="@+id/imageView"
-                android:layout_toRightOf="@+id/imageView"
+                android:layout_marginLeft="3dp"
                 android:layout_toEndOf="@+id/imageView"
-                android:id="@+id/like_c" />
+                android:layout_toRightOf="@+id/imageView"
+                android:text="12" />
 
             <TextView
+                android:id="@+id/answer_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/answer_c"
                 android:layout_alignBaseline="@+id/like_c"
                 android:layout_alignBottom="@+id/like_c"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:text="4 Answer"/>
+                android:layout_alignParentRight="true"
+                android:text="" />
 
         </RelativeLayout>
 
@@ -133,7 +134,7 @@
             android:layout_height="2px"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#C7C7C7"/>
+            android:background="#C7C7C7" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,21 +147,22 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:padding="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:padding="10dp">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/heart1"/>
+                    android:src="@drawable/heart1"
+                    android:id="@+id/like_image"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
-                    android:text="Like"/>
+                    android:text="Like" />
 
             </LinearLayout>
 
@@ -173,15 +175,15 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/board_answer"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/board_answer" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
-                    android:text="Answer"/>
+                    android:text="Answer" />
 
             </LinearLayout>
 
