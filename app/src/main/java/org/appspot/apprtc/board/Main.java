@@ -56,27 +56,32 @@ public class Main extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.board_main, container, false); 
 
+        // 초기화
         context = view.getContext();
         listView = (ListView)view.findViewById(R.id.listView);
         arrayList_item = new ArrayList<>();
         listViewAdapter = new ListViewAdapter(getContext());
-
-
-        listView.setAdapter(listViewAdapter);
-
-        circleImageView = (CircleImageView)view.findViewById(R.id.profile_image);
-        circleImageView.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/recommendation/.my_picture.jpg"));
         linearLayout = (LinearLayout)view.findViewById(R.id.linear);
 
+        // 리스트뷰 어뎁터 연결
+        listView.setAdapter(listViewAdapter);
 
+        // 자신 프로필 이미지 띄우기
+        circleImageView = (CircleImageView)view.findViewById(R.id.profile_image);
+        circleImageView.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/recommendation/.my_picture.jpg"));
+
+
+        // 리스너 연결
         listView.setOnScrollListener(onScrollListener);
         linearLayout.setOnClickListener(linearOnClickListener);
         circleImageView.setOnClickListener(cirOnClickListener);
 
 
+        // listview 빈 헤더
         listView.addHeaderView(getActivity().getLayoutInflater().inflate(R.layout.board_main_header,container, false));
 
 
+        // 세로고침 View
         mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_layout);
         mSwipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
@@ -90,6 +95,7 @@ public class Main extends Fragment {
 
         // 게시물 가져오기
         Get_post();
+
         return view;
     }
     SwipeRefreshLayout.OnRefreshListener refreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -118,7 +124,6 @@ public class Main extends Fragment {
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             int scrollY = getScrollY();
-            //sticky actionbar
             linearLayout.setTranslationY(Math.max(-scrollY, -scrollY));
 
         }
@@ -189,11 +194,6 @@ public class Main extends Fragment {
         connect_server.AddParams("NowPage", String.valueOf(NowPage)).AddParams("mail", mail).AddParams("token",sharedPreferences.getString("token",""))
                         .AddParams("user_type",sharedPreferences.getString("user_type",""));
         BufferedReader bufferedReader = connect_server.Connect(false);
-        try {
-            connect_server.Buffer_read(bufferedReader);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         String buffer = null;
         JSONObject jsonObject = null;
@@ -219,6 +219,7 @@ public class Main extends Fragment {
     }
 
 
+    // 글쓴이의 프로필 사진 가져오기
     void Get_ProfileImage(){
         final android.os.Handler handelr = new android.os.Handler();
 
