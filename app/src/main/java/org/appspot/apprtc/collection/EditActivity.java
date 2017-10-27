@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,6 +33,7 @@ public class EditActivity extends AppCompatActivity {
     TextView day_T, month_T, year_T;
     ImageButton color_btn, text_size_btn, gravity_btn;
     TextView text_size_monitor;
+    LinearLayout text_location_layout;
     Data data;
 
     @Override
@@ -52,6 +54,9 @@ public class EditActivity extends AppCompatActivity {
         text_size_btn = (ImageButton)findViewById(R.id.text_size_btn);
         gravity_btn = (ImageButton)findViewById(R.id.gravity_btn);
         text_size_monitor = (TextView)findViewById(R.id.text_size_monitor);
+        text_location_layout = (LinearLayout)findViewById(R.id.text_location_layout);
+        Button location_back = (Button)findViewById(R.id.location_back);
+        Button location_next = (Button)findViewById(R.id.location_next);
         day_T = (TextView)findViewById(R.id.day_T);
         month_T = (TextView)findViewById(R.id.month_T);
         year_T  = (TextView)findViewById(R.id.year_T);
@@ -89,6 +94,9 @@ public class EditActivity extends AppCompatActivity {
         text_size_btn.setOnClickListener(imageOnclickListener);
         gravity_btn.setOnClickListener(imageOnclickListener);
         seekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        location_back.setOnClickListener(buttonOnClickListener);
+        location_next.setOnClickListener(buttonOnClickListener);
+
 
 
         // 툴버튼 생성
@@ -112,7 +120,7 @@ public class EditActivity extends AppCompatActivity {
 
 
         // 메시지 초기 설정
-        data.garvity = center2.getId();
+//        data.garvity = center2.getId();
         center2.setVisibility(View.VISIBLE);
         center2.setText(message);
         float size = center2.getTextSize();
@@ -141,6 +149,42 @@ public class EditActivity extends AppCompatActivity {
 //        text_size_layout.setLayoutParams(params);
     }
 
+    Button.OnClickListener buttonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int x = data.x;
+            int y = data.y;
+
+            ((TextView)findViewById(data.location[x][y])).setVisibility(View.GONE);
+
+            if(v.getId() == R.id.location_back){
+                if(x == 0)
+                    x = 2;
+                else
+                    y--;
+
+                if(y == 0)
+                    y = 2;
+                else
+                    y--;
+
+
+            }else{
+                if(x == 2)
+                    x = 0;
+                else
+                    y++;
+
+                if(y == 2)
+                    y = 0;
+                else
+                    y++;
+            }
+
+
+        }
+    };
+
     // 텍스트 크기 조절 seekbar
     SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -160,7 +204,7 @@ public class EditActivity extends AppCompatActivity {
 
             Log.d("size", size+"");
             text_size_monitor.setText(((int) size)+"px");
-            ((TextView)findViewById(data.garvity)).setTextSize(size);
+            ((TextView)findViewById(data.location[data.x][data.y])).setTextSize(size);
         }
 
         @Override
@@ -186,7 +230,7 @@ public class EditActivity extends AppCompatActivity {
                 case R.id.color_btn1:
 
                     main_layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#0F0F0F"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#0F0F0F"));
 
                     day_T.setTextColor(Color.parseColor("#0F0F0F"));
                     month_T.setTextColor(Color.parseColor("#0F0F0F"));
@@ -194,7 +238,7 @@ public class EditActivity extends AppCompatActivity {
                     break;
                 case R.id.color_btn2:
                     main_layout.setBackgroundColor(Color.parseColor("#F5837B"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#F0FDC3"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#F0FDC3"));
 
                     day_T.setTextColor(Color.parseColor("#F0FDC3"));
                     month_T.setTextColor(Color.parseColor("#F0FDC3"));
@@ -203,7 +247,7 @@ public class EditActivity extends AppCompatActivity {
                     break;
                 case R.id.color_btn3:
                     main_layout.setBackgroundColor(Color.parseColor("#F7B959"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#3B2E1A"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#3B2E1A"));
 
                     day_T.setTextColor(Color.parseColor("#3B2E1A"));
                     month_T.setTextColor(Color.parseColor("#3B2E1A"));
@@ -211,7 +255,7 @@ public class EditActivity extends AppCompatActivity {
                     break;
                 case R.id.color_btn4:
                     main_layout.setBackgroundColor(Color.parseColor("#5D9D8D"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#FAFFFF"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#FAFFFF"));
 
                     day_T.setTextColor(Color.parseColor("#FAFFFF"));
                     month_T.setTextColor(Color.parseColor("#FAFFFF"));
@@ -219,7 +263,7 @@ public class EditActivity extends AppCompatActivity {
                     break;
                 case R.id.color_btn5:
                     main_layout.setBackgroundColor(Color.parseColor("#488B9F"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#FAFFFF"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#FAFFFF"));
 
                     day_T.setTextColor(Color.parseColor("#FAFFFF"));
                     month_T.setTextColor(Color.parseColor("#FAFFFF"));
@@ -227,7 +271,7 @@ public class EditActivity extends AppCompatActivity {
                     break;
                 case R.id.color_btn6:
                     main_layout.setBackgroundColor(Color.parseColor("#867896"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#FAFFFF"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#FAFFFF"));
 
                     day_T.setTextColor(Color.parseColor("#FAFFFF"));
                     month_T.setTextColor(Color.parseColor("#FAFFFF"));
@@ -235,7 +279,7 @@ public class EditActivity extends AppCompatActivity {
                     break;
                 case R.id.color_btn7:
                     main_layout.setBackgroundColor(Color.parseColor("#C9A3BA"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#FAFFFF"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#FAFFFF"));
 
                     day_T.setTextColor(Color.parseColor("#FAFFFF"));
                     month_T.setTextColor(Color.parseColor("#FAFFFF"));
@@ -243,7 +287,7 @@ public class EditActivity extends AppCompatActivity {
                     break;
                 case R.id.color_btn8:
                     main_layout.setBackgroundColor(Color.parseColor("#333333"));
-                    ((TextView)findViewById(data.garvity)).setTextColor(Color.parseColor("#FAFFFF"));
+                    ((TextView)findViewById(data.location[data.x][data.y])).setTextColor(Color.parseColor("#FAFFFF"));
 
                     day_T.setTextColor(Color.parseColor("#FAFFFF"));
                     month_T.setTextColor(Color.parseColor("#FAFFFF"));
@@ -260,6 +304,9 @@ public class EditActivity extends AppCompatActivity {
 
                     if(text_size_layout.getVisibility() == View.VISIBLE)
                         text_size_layout.setVisibility(View.GONE);
+
+                    if(text_location_layout.getVisibility() == View.VISIBLE)
+                        text_location_layout.setVisibility(View.GONE);
                     break;
                 case R.id.text_size_btn:
 
@@ -268,12 +315,28 @@ public class EditActivity extends AppCompatActivity {
                     else
                         text_size_layout.setVisibility(View.GONE);
 
+                    if(text_location_layout.getVisibility() == View.VISIBLE)
+                        text_location_layout.setVisibility(View.GONE);
+
 
                     if(color_layout.getVisibility() == View.VISIBLE)
                         color_layout.setVisibility(View.GONE);
                     break;
                 case R.id.gravity_btn:
+                    if(color_layout.getVisibility() == View.VISIBLE)
+                        color_layout.setVisibility(View.GONE);
 
+                    if(text_size_layout.getVisibility() == View.VISIBLE)
+                        text_size_layout.setVisibility(View.GONE);
+
+
+                    if(text_location_layout.getVisibility() == View.VISIBLE)
+                        text_location_layout.setVisibility(View.GONE);
+
+                    if(text_location_layout.getVisibility() == View.VISIBLE)
+                        text_location_layout.setVisibility(View.GONE);
+                    else
+                        text_location_layout.setVisibility(View.VISIBLE);
                     break;
             }
         }
