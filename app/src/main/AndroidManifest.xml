@@ -97,6 +97,11 @@
     <activity android:name=".board.WriteActivity"/>
     <activity android:name=".collection.TestActivity"/>
     <activity android:name=".collection.EditActivity"/>
+    <activity android:name=".board.AnswerActivity"
+        android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar"/>
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
 
     <service android:name=".TcpService"/>
 

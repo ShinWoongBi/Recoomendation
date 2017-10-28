@@ -316,9 +316,12 @@ public class Main extends Fragment {
             }
 
             // 답변수 올리기
+            TextView answer_c = (TextView) convertView.findViewById(R.id.answer_c);
             if(data.answer_c != 0) {
-                TextView answer_c = (TextView) convertView.findViewById(R.id.answer_c);
+                answer_c.setVisibility(View.VISIBLE);
                 answer_c.setText(data.answer_c + " Answer");
+            }else{
+                answer_c.setVisibility(View.GONE);
             }
 
 
@@ -329,6 +332,20 @@ public class Main extends Fragment {
                 ((ImageView)convertView.findViewById(R.id.like_image)).setImageResource(R.drawable.heart1);
             }
 
+            // 답변 Activity 띄우기
+            LinearLayout answer_btn = (LinearLayout)convertView.findViewById(R.id.answer_btn);
+            answer_btn.setTag(position);
+            answer_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), AnswerActivity.class);
+                    intent.putExtra("post_id",arrayList_item.get((Integer) v.getTag()).post_id);
+                    startActivity(intent);
+                }
+            });
+
+
+            // 좋아요 누르기
             LinearLayout like_btn = (LinearLayout)convertView.findViewById(R.id.like_btn);
             like_btn.setTag(position);
             like_btn.setOnClickListener(new View.OnClickListener() {

@@ -16,4 +16,6 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
 </resources>
