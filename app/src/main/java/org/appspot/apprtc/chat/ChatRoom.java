@@ -77,6 +77,7 @@ public class ChatRoom extends AppCompatActivity {
         Intent intent = getIntent();
         friend_mail = intent.getStringExtra("mail");
 
+        // 읽지 않은 메시지 초기화
         SharedPreferences count_shPreferences = getSharedPreferences("count", MODE_PRIVATE);
         SharedPreferences.Editor editor = count_shPreferences.edit();
         String mail_c =friend_mail+"~count";

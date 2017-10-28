@@ -14,10 +14,11 @@ public class Data {
     int y = 1;
 
     float size;
-    int color;
+    int background;
     int font;
 
-    String date;
+    String day;
+    String month_year;
     String message;
 
 

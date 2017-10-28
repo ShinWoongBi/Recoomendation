@@ -26,19 +26,21 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#00FF0000"
+            android:textColor="#fff"
             android:text="DONE"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:id="@+id/button2" />
+            android:id="@+id/done_btn" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/button2"
-            android:layout_toStartOf="@+id/button2"
+            android:layout_toLeftOf="@+id/done_btn"
+            android:layout_toStartOf="@+id/done_btn"
             android:layout_marginRight="10dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
@@ -58,7 +60,7 @@
             android:layout_height="match_parent">
 
 
-
+            <!-- 실제 화면-->
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -67,7 +69,7 @@
                 android:gravity="center"
                 android:paddingBottom="50dip">
 
-
+                <!-- 실제 화면-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,15 +77,19 @@
                     android:id="@+id/main_layout"
                     android:padding="10dp">
 
+                    <!-- 화면 레이아웃-->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="10dp">
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="50dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123"
                             android:id="@+id/data_top_left"
                             android:layout_alignParentLeft="true"
@@ -93,7 +99,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:visibility="gone"
                             android:text="123"
                             android:id="@+id/data_top_center"
@@ -102,7 +108,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123"
                             android:id="@+id/data_top_right"
                             android:visibility="gone"
@@ -111,7 +117,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123"
                             android:id="@+id/data_center_left"
                             android:visibility="gone"
@@ -121,7 +127,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123sdfasdfa"
                             android:id="@+id/data_center"
                             android:visibility="gone"
@@ -130,7 +136,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123"
                             android:visibility="gone"
                             android:id="@+id/data_center_right"
@@ -142,7 +148,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123"
                             android:id="@+id/data_bottom_left"
                             android:layout_alignParentLeft="true"
@@ -152,7 +158,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="gone"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123"
                             android:id="@+id/data_bottom_center"
                             android:layout_alignParentBottom="true"
@@ -161,7 +167,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="40px"
+                            android:textSize="30px"
                             android:text="123"
                             android:visibility="gone"
                             android:id="@+id/data_bottom_right"
@@ -170,10 +176,11 @@
                             android:layout_alignParentBottom="true"/>
 
 
+
                     </RelativeLayout>
 
 
-
+                    <!-- 날짜 레이아웃-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
@@ -187,11 +194,11 @@
                             android:layout_width="40dp"
                             android:layout_height="match_parent"
                             android:singleLine="true"
-                            android:gravity="top"
+                            android:gravity="bottom"
                             android:maxLines="2"
                             android:textSize="35sp"
                             android:id="@+id/day_T"
-                            android:text="22"/>
+                            android:text="13"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -199,24 +206,22 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/month_T"
+                                android:id="@+id/month_year_T"
                                 android:layout_width="50dp"
-                                android:layout_height="20dp"
-                                android:gravity="bottom"
-                                android:maxLines="2"
-                                android:singleLine="true"
-                                android:text="Oct"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="50dp"
-                                android:layout_height="20dp"
-                                android:singleLine="true"
+                                android:layout_height="match_parent"
                                 android:gravity="top"
-                                android:maxLines="2"
-                                android:textSize="20sp"
-                                android:id="@+id/year_T"
-                                android:text="2017"/>
+                                android:text="Oct\n2017"
+                                android:textSize="15sp" />
+
+                            <!--<TextView-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="20dp"-->
+                                <!--android:singleLine="true"-->
+                                <!--android:gravity="top"-->
+                                <!--android:maxLines="2"-->
+                                <!--android:textSize="18sp"-->
+                                <!--android:id="@+id/year_T"-->
+                                <!--android:text="2017"/>-->
 
                         </LinearLayout>
 
@@ -226,7 +231,8 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <!-- 메뉴 레이아웃-->
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
@@ -234,13 +240,100 @@
                 android:layout_above="@+id/menu_layout"
                 android:orientation="horizontal">
 
+
+                <!-- 폰트 변경 레이아웃-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/font_layout"
+                    android:background="#FFF"
+                    android:visibility="invisible"
+                    android:weightSum="9">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="text"
+                        android:textSize="7pt"
+                        android:layout_weight="1"
+                        android:id="@+id/font1_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="7pt"
+                        android:text="text"
+                        android:layout_weight="1"
+                        android:id="@+id/font2_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="7pt"
+                        android:text="text"
+                        android:layout_weight="1"
+                        android:id="@+id/font3_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:textSize="7pt"
+                        android:layout_height="match_parent"
+                        android:text="text"
+                        android:layout_weight="1"
+                        android:id="@+id/font4_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="text"
+                        android:textSize="7pt"
+                        android:layout_weight="1"
+                        android:id="@+id/font5_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="7pt"
+                        android:text="text"
+                        android:layout_weight="1"
+                        android:id="@+id/font6_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="text"
+                        android:textSize="7pt"
+                        android:layout_weight="1"
+                        android:id="@+id/font7_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="text"
+                        android:textSize="7pt"
+                        android:layout_weight="1"
+                        android:id="@+id/font8_T"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="text"
+                        android:textSize="7pt"
+                        android:layout_weight="1"
+                        android:id="@+id/font9_T"/>
+
+
+
+                </LinearLayout>
+
+                <!-- 배경 변경 레이아웃-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:id="@+id/color_layout"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-
                     android:background="#fff">
 
                     <View
@@ -349,12 +442,14 @@
 
                 </LinearLayout>
 
+                <!-- 폰트 크기 변경 레이아웃-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/text_size_layout"
                     android:orientation="horizontal"
-                    android:visibility="gone"
+                    android:background="#FFF"
+                    android:visibility="invisible"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
@@ -380,14 +475,16 @@
 
                 </LinearLayout>
 
-
+                <!-- 위치 변경 레이아웃-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/text_location_layout"
                     android:orientation="horizontal"
+                    android:background="#FFF"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:visibility="invisible">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -399,21 +496,23 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/location_back"/>
+                        android:id="@+id/location_back"
+                        android:text="이전"/>
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/location_next"/>
+                        android:id="@+id/location_next"
+                        android:text="다음"/>
 
 
                 </LinearLayout>
 
 
-            </LinearLayout>
+            </FrameLayout>
 
 
-
+            <!-- 하단 메뉴-->
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="55dp"
@@ -436,11 +535,24 @@
                         android:layout_alignParentRight="true"
                         android:orientation="horizontal">
 
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/font_btn"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/font_btn"
+                            android:background="#00FF0000"
+                            android:padding="10dp"/>
+
 
                         <ImageButton
-                            android:layout_width="wrap_content"
+                            android:layout_width="50dp"
                             android:layout_height="match_parent"
-                            android:id="@+id/gravity_btn"/>
+                            android:id="@+id/location_btn"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/location_btn"
+                            android:background="#00FF0000"
+                            android:padding="10dp"/>
 
                         <ImageButton
                             android:layout_width="50dp"
@@ -451,14 +563,15 @@
                             android:src="@drawable/text_btn"
                             android:id="@+id/color_btn"
                             />
+
                         <ImageButton
+                            android:id="@+id/text_size_btn"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/text_size_btn"
-                            android:id="@+id/text_size_btn"
                             android:background="#00FF0000"
-                            android:padding="10dp"/>
+                            android:padding="10dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/text_size_btn" />
 
                     </LinearLayout>
 
@@ -470,11 +583,6 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </LinearLayout>
 
 
 </LinearLayout>
