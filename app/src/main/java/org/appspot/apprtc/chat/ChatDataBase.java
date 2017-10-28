@@ -24,7 +24,14 @@ public class ChatDataBase extends SQLiteOpenHelper {
     // Chat_main에 모든 채팅 내용 가져오기
     public ArrayList select_all(){
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "SELECT * FROM chat  ORDER BY id DESC";
+        Cursor cursor1 = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name ='chat'" , null);
+        cursor1.moveToFirst();
+
+        if(cursor1.getCount()==0){
+            return null;
+        }
+
+        String sql = "SELECT * FROM chat ORDER BY id DESC";
         ArrayList<Data> arrayList = new ArrayList<>();
         Data data;
         int count = 0;

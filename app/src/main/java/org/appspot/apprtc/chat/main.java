@@ -120,7 +120,12 @@ public class main extends AppCompatActivity {
 
     public void Get_All(){
         arrayList = chatDataBase.select_all();
-        Get_ProfileImage();
+        if(arrayList != null) {
+            ((TextView)findViewById(R.id.not_content)).setVisibility(View.GONE);
+            Get_ProfileImage();
+        }else{
+            arrayList = new ArrayList<>();
+        }
     }
 
     ListView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {

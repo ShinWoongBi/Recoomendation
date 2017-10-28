@@ -12,11 +12,28 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <ListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listView">
+        android:layout_height="match_parent">
 
-    </ListView>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listView">
+
+        </ListView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:text="대화 내용이 없습니다"
+            android:id="@+id/not_content"
+            android:gravity="center"
+            android:textSize="10pt"/>
+
+    </FrameLayout>
+
+
 
 </LinearLayout>
