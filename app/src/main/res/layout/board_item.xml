@@ -99,13 +99,14 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:visibility="invisible">
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/heart2" />
+                android:src="@drawable/heart2"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/like_c"
@@ -115,7 +116,8 @@
                 android:layout_marginLeft="3dp"
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
-                android:text="12" />
+                android:text="12"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/answer_c"
@@ -125,7 +127,8 @@
                 android:layout_alignBottom="@+id/like_c"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="" />
+                android:text=""
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -145,6 +148,7 @@
             android:weightSum="10">
 
             <LinearLayout
+                android:id="@+id/like_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -153,10 +157,10 @@
                 android:padding="10dp">
 
                 <ImageView
+                    android:id="@+id/like_image"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/heart1"
-                    android:id="@+id/like_image"/>
+                    android:src="@drawable/heart1" />
 
                 <TextView
                     android:layout_width="wrap_content"

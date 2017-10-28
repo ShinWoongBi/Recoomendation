@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -193,7 +194,13 @@ public class Main extends Fragment {
         connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/community/GetPost.php");
         connect_server.AddParams("NowPage", String.valueOf(NowPage)).AddParams("mail", mail).AddParams("token",sharedPreferences.getString("token",""))
                         .AddParams("user_type",sharedPreferences.getString("user_type",""));
-        BufferedReader bufferedReader = connect_server.Connect(false);
+        BufferedReader bufferedReader = connect_server.Connect(true);
+
+        try {
+            connect_server.Buffer_read(bufferedReader);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String buffer = null;
         JSONObject jsonObject = null;
@@ -293,13 +300,19 @@ public class Main extends Fragment {
             name_T.setText(data.profile_name);
 
             // 제목 올리기
-            TextView content = (TextView)convertView.findViewById(R.id.content);
+            final TextView content = (TextView)convertView.findViewById(R.id.content);
             content.setText(data.content);
 
+            Log.d("data.likec", data.like_c+"");
             // 종아요수 올리기
+            TextView like_c = (TextView) convertView.findViewById(R.id.like_c);
             if(data.like_c != 0) {
-                TextView like_c = (TextView) convertView.findViewById(R.id.like_c);
+                like_c.setVisibility(View.VISIBLE);
+                ((ImageView)convertView.findViewById(R.id.imageView)).setVisibility(View.VISIBLE);
                 like_c.setText(data.like_c + "");
+            }else{
+                like_c.setVisibility(View.INVISIBLE);
+                ((ImageView)convertView.findViewById(R.id.imageView)).setVisibility(View.INVISIBLE);
             }
 
             // 답변수 올리기
@@ -310,9 +323,51 @@ public class Main extends Fragment {
 
 
             // 좋아요를 한지 안한지
-            if(!data.liked){
-                ((ImageView)convertView.findViewById(R.id.imageView)).setImageResource(R.drawable.heart2);
+            if(data.liked){
+                ((ImageView)convertView.findViewById(R.id.like_image)).setImageResource(R.drawable.heart2);
+            }else{
+                ((ImageView)convertView.findViewById(R.id.like_image)).setImageResource(R.drawable.heart1);
             }
+
+            LinearLayout like_btn = (LinearLayout)convertView.findViewById(R.id.like_btn);
+            like_btn.setTag(position);
+            like_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Profile",Context.MODE_PRIVATE);
+
+                    Connect_server connect_server = new Connect_server();
+                    connect_server.SetUrl("http://tlsdndql27.vps.phps.kr/recommendation/community/Like.php");
+                    connect_server.AddParams("mail",sharedPreferences.getString("mail","")).AddParams("token",sharedPreferences.getString("token",""))
+                                    .AddParams("user_type",sharedPreferences.getString("user_type","")).AddParams("id", arrayList_item.get((Integer) v.getTag()).post_id+"");
+                    BufferedReader bufferedReader;
+
+                    if(!arrayList_item.get((Integer) v.getTag()).liked){ // 좋아요 올리기
+                        connect_server.AddParams("flag", "1");
+                        bufferedReader = connect_server.Connect(false);
+                        try {
+                            connect_server.Buffer_read(bufferedReader);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }else{ // 좋아요 삭제
+                        connect_server.AddParams("flag", "2");
+                        bufferedReader = connect_server.Connect(true);
+                        try {
+                            connect_server.Buffer_read(bufferedReader);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    // list 데이터 비우
+                    arrayList_item.clear();
+
+
+                    // 게시물 새로고침
+                    Get_post();
+                }
+            });
 
             circleImageView.setTag(position);
             circleImageView.setOnClickListener(new View.OnClickListener() {
