@@ -7,6 +7,7 @@ import org.appspot.apprtc.R;
  */
 
 public class Data {
+    int id;
     int[][] location = {{R.id.data_top_left,R.id.data_top_center,R.id.data_top_right},
             {R.id.data_center_left,R.id.data_center,R.id.data_center_right},
             {R.id.data_bottom_left,R.id.data_bottom_center,R.id.data_bottom_right}};
@@ -21,5 +22,6 @@ public class Data {
     String month_year;
     String message;
 
+    String path;
 
 }

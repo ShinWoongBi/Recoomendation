@@ -1,9 +1,11 @@
 package org.appspot.apprtc.collection;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +24,12 @@ import android.widget.TextView;
 
 import org.appspot.apprtc.R;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * Created by kippe_000 on 2017-10-27.
@@ -218,6 +224,12 @@ public class EditActivity extends AppCompatActivity {
     Button.OnClickListener done_btn_listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            String picture_name = UUID.randomUUID().toString();
+            data.path = picture_name;
+
+            screenshot(main_layout, picture_name);
+
+
             // DB에 저장
             collectionDataBase.insert(data);
             finish();
@@ -536,6 +548,33 @@ public class EditActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private static void screenshot(View view, String name) {
+
+        view.buildDrawingCache();
+
+        Bitmap bm;
+        bm = view.getDrawingCache();
+        try {
+            String file_path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/recommendation/collection/.";
+
+            File path = new File(file_path);
+
+            if(! path.isDirectory()) {
+                path.mkdirs();
+            }
+
+            file_path = file_path + name;
+
+            file_path = file_path + ".jpg";
+
+            FileOutputStream out = new FileOutputStream(file_path);
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+        } catch (FileNotFoundException e) {
+            Log.d("FileNotFoundException:", e.getMessage());
+        }
     }
 
     @Override
