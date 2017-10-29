@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -303,7 +302,6 @@ public class Main extends Fragment {
             final TextView content = (TextView)convertView.findViewById(R.id.content);
             content.setText(data.content);
 
-            Log.d("data.likec", data.like_c+"");
             // 종아요수 올리기
             TextView like_c = (TextView) convertView.findViewById(R.id.like_c);
             if(data.like_c != 0) {

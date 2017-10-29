@@ -69,7 +69,7 @@ public class ChatRoom extends AppCompatActivity {
         message_E = (EditText)findViewById(R.id.message_E);
         listView_list = new ArrayList<>();
         listView_adapter = new ListView_Adapter(getApplicationContext());
-        chatDataBase = new ChatDataBase(getApplicationContext(), "recommendation.db", null, 1);
+        chatDataBase = new ChatDataBase(getApplicationContext(), "chat.db", null, 1);
         my_mail = sharedPreferences.getString("mail","");
 
 
@@ -123,6 +123,15 @@ public class ChatRoom extends AppCompatActivity {
         // 채팅 내용 가져오기
         ChangeNewListView();
 
+
+        message_E.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    listView.setSelection(listView_list.size()-1);
+                }
+            }
+        });
     }
 
     @Override
@@ -264,27 +273,29 @@ public class ChatRoom extends AppCompatActivity {
 
         JSONArray jsonArray = chatDataBase.select_room(this.friend_mail);
         JSONObject jsonObject;
-        for(int i = 0; i < jsonArray.length(); i++){
-            try {
-                jsonObject = jsonArray.getJSONObject(i);
+        if(jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    jsonObject = jsonArray.getJSONObject(i);
 
-                friend_mail = jsonObject.getString("friend_mail");
-                message = jsonObject.getString("message");
-                my_message = jsonObject.getInt("my_message");
-                time = jsonObject.getString("time");
+                    friend_mail = jsonObject.getString("friend_mail");
+                    message = jsonObject.getString("message");
+                    my_message = jsonObject.getInt("my_message");
+                    time = jsonObject.getString("time");
 
 
-                data = new Data(friend_mail, message);
-                data.my_message = my_message;
-                data.time = time;
-                data.id = id;
+                    data = new Data(friend_mail, message);
+                    data.my_message = my_message;
+                    data.time = time;
+                    data.id = id;
 
-                listView_list.add(data);
+                    listView_list.add(data);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
-
         }
 
         listView_adapter.notifyDataSetChanged();

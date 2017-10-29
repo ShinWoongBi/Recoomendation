@@ -57,7 +57,7 @@ public class main extends AppCompatActivity {
         setContentView(R.layout.chat_main);
 
         int flag = 0;
-        chatDataBase = new ChatDataBase(getApplicationContext(), "recommendation.db", null, 1);
+        chatDataBase = new ChatDataBase(getApplicationContext(), "chat.db", null, 1);
         listView = (ListView)findViewById(R.id.listView);
         listviewAdapter = new ListviewAdapter(getApplicationContext());
         handler = new org.appspot.apprtc.chat.Handler(main.this);

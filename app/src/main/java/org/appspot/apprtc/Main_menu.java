@@ -28,11 +28,15 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 
 import org.appspot.apprtc.board.Main;
+import org.appspot.apprtc.chat.ChatDataBase;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -111,6 +115,35 @@ public class Main_menu extends AppCompatActivity {
         Get_Profile();
 
 
+
+        AccessTokenTracker fbTracker;
+        fbTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken2) {
+                if (accessToken2 == null) {
+                    Log.d("FB", "User Logged Out.");
+
+                    File file = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/recommendation/.my_picture.jpg");
+
+                    SharedPreferences.Editor editor = getSharedPreferences("Profile",MODE_PRIVATE).edit();
+                    editor.clear();
+                    editor.commit();
+
+                    ChatDataBase chatDataBase = new ChatDataBase(getApplicationContext(), "chat.db", null, 1);
+                    chatDataBase.delete();
+
+
+                    Intent intent = new Intent(Main_menu.this, Login.class);
+                    finish();
+                    startActivity(intent);
+
+                }else{
+                    Log.d("FB","login");
+                }
+            }
+        };
+        fbTracker.startTracking();
+
     }
 
     @Override
@@ -132,8 +165,6 @@ public class Main_menu extends AppCompatActivity {
         }
         return false;
     }
-
-
 
 
     void Get_Profile(){

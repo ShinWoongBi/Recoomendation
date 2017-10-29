@@ -49,7 +49,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             e.printStackTrace();
         }
 
-        ChatDataBase chatDataBase = new ChatDataBase(MyFirebaseMessagingService.this, "recommendation.db", null, 1);
+        ChatDataBase chatDataBase = new ChatDataBase(MyFirebaseMessagingService.this, "chat.db", null, 1);
         chatDataBase.insert(2, jsonObject.toString());
 
         try {

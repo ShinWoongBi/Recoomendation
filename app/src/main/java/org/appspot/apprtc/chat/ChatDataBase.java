@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by kippe_000 on 2017-10-22.
@@ -60,10 +61,36 @@ public class ChatDataBase extends SQLiteOpenHelper {
         return arrayList;
     }
 
+    public Objects delete(){
+        SQLiteDatabase db = getWritableDatabase();
+
+        SQLiteDatabase db_r = getReadableDatabase();
+        Cursor cursor1 = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name ='chat'" , null);
+        cursor1.moveToFirst();
+
+        if(cursor1.getCount()==0){
+            return null;
+        }
+
+        String sql = "DELETE FROM chat";
+        db.execSQL(sql);
+
+        return null;
+    }
+
+
 
     // 방에 표시될 특정 사람의 채팅 내용 가져오기
     public JSONArray select_room(String friend_mail){
         SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor1 = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name ='chat'" , null);
+        cursor1.moveToFirst();
+
+        if(cursor1.getCount()==0){
+            return null;
+        }
+
         String sql = null;
 
         JSONObject jsonObject = new JSONObject();

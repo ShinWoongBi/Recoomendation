@@ -7,7 +7,6 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +39,9 @@ public class Main extends Fragment {
         datelist = new ArrayList<>();
         adapter = new Adapter(getContext());
         listView.setAdapter(adapter);
+
+
+
 
         return view;
     }
@@ -90,9 +92,9 @@ public class Main extends Fragment {
 
             String[] date = data.month_year.split("\\\\n");
 
-            Log.d("position", position+"");
-            Log.d("id", data.id+"");
-            Log.d("path", data.path);
+//            Log.d("position", position+"");
+//            Log.d("id", data.id+"");
+//            Log.d("path", data.path);
 
 
             TextView textView = (TextView)convertView.findViewById(R.id.textView);
