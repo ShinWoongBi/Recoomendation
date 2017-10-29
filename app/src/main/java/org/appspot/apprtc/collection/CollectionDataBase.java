@@ -25,7 +25,6 @@ public class CollectionDataBase extends SQLiteOpenHelper {
         ArrayList<Data> arrayList = new ArrayList<>();
 
 
-
         Cursor cursor = db.rawQuery(sql, null);
         while(cursor.moveToNext()){
             data.id = cursor.getInt(0);
@@ -49,6 +48,7 @@ public class CollectionDataBase extends SQLiteOpenHelper {
         ArrayList<Data> arrayList = new ArrayList<>();
         Data data = new Data();
         String sql = "SELECT id,picture,day,month_year FROM collection ORDER BY id DESC";
+        ArrayList<String> datelist = new ArrayList<>();
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -57,6 +57,23 @@ public class CollectionDataBase extends SQLiteOpenHelper {
             data.path = cursor.getString(1);
             data.day = cursor.getString(2);
             data.month_year = cursor.getString(3);
+
+            int is_date = 0;
+            for(int i = 0; i < datelist.size(); i++){
+                if(datelist.get(i).equals(data.month_year)){
+                    is_date++;
+                    break;
+                }
+            }
+            if(is_date==0) {
+                Data data1 = new Data();
+                data1.flag = 1;
+                data1.month_year = data.month_year;
+                datelist.add(data.month_year);
+                arrayList.add(data1);
+            }
+
+
             arrayList.add(data);
             data = new Data();
         }

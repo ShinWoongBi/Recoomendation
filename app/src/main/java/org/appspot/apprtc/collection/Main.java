@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,8 @@ public class Main extends Fragment {
     void GetData(){
         CollectionDataBase collectionDataBase = new CollectionDataBase(getContext(), "recommendation.db", null, 1);
         arrayList = collectionDataBase.select();
+        Log.d("size", arrayList.size()+"");
+        datelist.clear();
         adapter.notifyDataSetChanged();
     }
 
@@ -92,36 +95,29 @@ public class Main extends Fragment {
 
             String[] date = data.month_year.split("\\\\n");
 
-//            Log.d("position", position+"");
-//            Log.d("id", data.id+"");
-//            Log.d("path", data.path);
-
 
             TextView textView = (TextView)convertView.findViewById(R.id.textView);
             ImageView imageView = (ImageView)convertView.findViewById(R.id.imageView);
 
-            DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
-            int width = dm.widthPixels;
-            ViewGroup.LayoutParams params = imageView.getLayoutParams();
-            params.width = width;
-            params.height = width;
-            imageView.setLayoutParams(params);
-
-            int is_date = 0;
-            for(int i = 0; i < datelist.size(); i++){
-                if(datelist.get(i).equals(data.month_year)){
-                    is_date++;
-                    break;
-                }
-            }
-            if(is_date==0) {
+            if(data.flag == 1) {
                 textView.setText(date[0] + ". " + date[1]);
                 datelist.add(data.month_year);
-            }else
+                textView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.GONE);
+            }else {
                 textView.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
 
-            imageView.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/recommendation/collection/."+data.path+".jpg"));
+                DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+                int width = dm.widthPixels;
+                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                params.width = width;
+                params.height = width;
+                imageView.setLayoutParams(params);
 
+
+                imageView.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/recommendation/collection/." + data.path + ".jpg"));
+            }
             return convertView;
         }
     }

@@ -24,4 +24,6 @@ public class Data {
 
     String path;
 
+    int flag = 0;
+
 }

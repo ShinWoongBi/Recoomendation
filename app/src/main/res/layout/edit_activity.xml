@@ -194,7 +194,7 @@
                             android:layout_width="40dp"
                             android:layout_height="match_parent"
                             android:singleLine="true"
-                            android:gravity="bottom"
+                            android:gravity="center|right"
                             android:maxLines="2"
                             android:textSize="35sp"
                             android:id="@+id/day_T"
@@ -209,7 +209,7 @@
                                 android:id="@+id/month_year_T"
                                 android:layout_width="50dp"
                                 android:layout_height="match_parent"
-                                android:gravity="top"
+                                android:gravity="center|left"
                                 android:text="Oct\n2017"
                                 android:textSize="15sp" />
 
